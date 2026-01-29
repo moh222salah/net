@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="حل احترافي لأزمة الإنترنت في مصر - بيانات حقيقية، حلول واقعية">
+    <meta name="keywords" content="إنترنت مصر, أزمة الباندويدث, حلول رقمية, اتصالات">
+    <title>أزمة الإنترنت في مصر - حلول حقيقية</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        /* ==================== ROOT VARIABLES ==================== */
+        :root {
+            /* Light Mode Colors */
+            --primary-color: #2563eb;
+            --secondary-color: #f97316;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --text-primary: #000000;
+            --text-secondary: #475569;
+            --border-color: rgba(148, 163, 184, 0.2);
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            
+            --font-en: 'Poppins', sans-serif;
+            --font-ar: 'Cairo', sans-serif;
+        }
+        
+        /* Dark Mode Colors */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(148, 163, 184, 0.1);
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            
+            --glass-bg: rgba(30, 41, 59, 0.3);
+            --glass-border: rgba(148, 163, 184, 0.1);
+        }
+        
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-ar);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
+            padding-bottom: 80px;
+            font-weight: 600;
+        }
+        
+        [lang="en"] body {
+            font-family: var(--font-en);
+            font-weight: 500;
+        }
+        
+        /* تحسين الخط العربي */
+        [lang="ar"] body {
+            font-family: var(--font-ar);
+            font-weight: 600;
+        }
+        
+        [lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3, [lang="ar"] h4 {
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        [lang="en"] h1, [lang="en"] h2, [lang="en"] h3, [lang="en"] h4 {
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+        
+        /* ==================== ANIMATED BACKGROUND ==================== */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--success-color), var(--primary-color));
+            bottom: -10%;
+            right: -10%;
+            animation-delay: 7s;
+        }
+        
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--warning-color));
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 14s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+        
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ==================== HEADER ==================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background: var(--bg-card);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        /* في اللغة العربية: اسم الموقع على اليمين والأيقونة على اليسار */
+        [lang="ar"] .logo {
+            flex-direction: row-reverse;
+        }
+
+        /* في اللغة الإنجليزية: اسم الموقع على اليسار والأيقونة على اليمين */
+        [lang="en"] .logo {
+            flex-direction: row;
+        }
+
+        /* ==================== DESKTOP NAVIGATION (LAPTOP) ==================== */
+        .desktop-nav {
+            display: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .desktop-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (min-width: 769px) {
+            .desktop-nav {
+                display: flex;
+            }
+        }
+        
+        /* ==================== زر تبديل اللغة ==================== */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        [lang="ar"] .lang-switcher {
+            left: auto;
+            right: 20px;
+        }
+        
+        .lang-switcher:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* ==================== THEME TOGGLE - أسفل اليسار دائماً ==================== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        [lang="ar"] .theme-toggle {
+            left: auto;
+            right: 20px;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(20deg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* ==================== GLASS CARD ==================== */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* ==================== SECTION TITLES ==================== */
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 900;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: var(--text-primary);
+        }
+        
+        .section-icon {
+            font-size: clamp(32px, 5vw, 48px);
+        }
+        
+        /* ==================== STATS SECTION ==================== */
+        #stats {
+            padding: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        @media (min-width: 769px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-value {
+            font-size: clamp(36px, 5vw, 52px);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+        
+        /* ==================== TIMELINE ==================== */
+        #timeline {
+            padding: 80px 0;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .timeline-content {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            width: calc(50% - 40px);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .timeline-year {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 4px solid var(--bg-primary);
+            border-radius: 50%;
+            top: 25px;
+            box-shadow: 0 0 0 4px var(--primary-color);
+        }
+        
+        /* ==================== CALCULATOR ==================== */
+        #calculator {
+            padding: 80px 0;
+        }
+        
+        .calculator-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 769px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+        
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-family: inherit;
+        }
+        
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 769px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .result-item {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .result-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+        
+        /* ==================== ROUTER TIPS SECTION ==================== */
+        #router-tips {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 769px) {
+            .tips-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .tip-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        [lang="en"] .tip-card::before {
+            left: auto;
+            right: 0;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tip-icon {
+            font-size: 42px;
+            flex-shrink: 0;
+        }
+        
+        .tip-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .tip-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .tip-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .tip-steps li {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            padding-right: 30px;
+            position: relative;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        
+        [lang="en"] .tip-steps li {
+            padding-right: 0;
+            padding-left: 30px;
+        }
+        
+        .tip-steps li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--success-color);
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        [lang="en"] .tip-steps li::before {
+            right: auto;
+            left: 0;
+        }
+        
+        .tip-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-top: 15px;
+        }
+        
+        /* ==================== SOLUTIONS ==================== */
+        #solutions {
+            padding: 80px 0;
+        }
+        
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        @media (min-width: 769px) {
+            .solutions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .solution-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .solution-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .solution-title {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .solution-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-weight: 600;
+        }
+        
+        .solution-features {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .solution-features li {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-right: 25px;
+            position: relative;
+            list-style: none;
+            font-weight: 600;
+        }
+
+        [lang="en"] .solution-features li {
+            padding-right: 0;
+            padding-left: 25px;
+        }
+        
+        .solution-features li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        [lang="en"] .solution-features li::before {
+            right: auto;
+            left: 0;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 50px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 769px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* ==================== MOBILE BOTTOM NAV - أيقونات فقط بدون نص ==================== */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        .nav-item span {
+            font-size: 26px;
+        }
+        
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 80px;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 35px;
+            }
+            
+            #stats, #timeline, #calculator, #solutions {
+                padding: 50px 0;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+    
+    <!-- Language Switcher -->
+    <button class="lang-switcher" onclick="toggleLanguage()">
+        <span id="langText">EN</span>
+    </button>
+    
+    <!-- Theme Toggle - أسفل اليسار دائماً -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌐</span>
+                    <span id="logoText">أزمة الإنترنت</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav">
+                    <a href="#hero" class="active" id="navDesktopHome">الرئيسية</a>
+                    <a href="#calculator" id="navDesktopCalculator">الحاسبة</a>
+                    <a href="#router-tips" id="navDesktopRouterTips">الإرشادات</a>
+                    <a href="#stats" id="navDesktopStats">الإحصائيات</a>
+                    <a href="#timeline" id="navDesktopTimeline">التطور</a>
+                    <a href="#solutions" id="navDesktopSolutions">الحلول</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1 id="heroTitle">🚨 أزمة الإنترنت في مصر</h1>
+            <p id="heroSubtitle">بيانات حقيقية تكشف حجم الأزمة - حلول عملية لتجاوز التحديات</p>
+            <div class="hero-buttons">
+                <a href="#calculator" class="btn btn-primary" id="calcBtn">احسب تكلفتك الحقيقية 📊</a>
+                <a href="#solutions" class="btn btn-secondary" id="solutionsBtn">الإجراءات المطلوبة 🏛️</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Calculator Section -->
+    <section id="calculator">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-icon">💰</span>
+                <span id="calculatorTitle">احسب تكلفتك الحقيقية</span>
+            </h2>
+            
+            <div class="glass-card calculator-container">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" id="labelPackage">باقتك الشهرية (جيجابايت):</label>
+                        <input type="number" id="packageSize" class="form-input" value="10" min="1" oninput="calculateCosts()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelPrice">السعر الشهري (جنيه):</label>
+                        <input type="number" id="packagePrice" class="form-input" value="200" min="1" oninput="calculateCosts()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelUsage">استهلاكك الفعلي (جيجابايت/شهر):</label>
+                        <input type="number" id="dataNeeded" class="form-input" value="60" min="1" oninput="calculateCosts()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelUsers">عدد المستخدمين:</label>
+                        <select id="numUsers" class="form-select" onchange="calculateCosts()">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="100">100+</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" id="labelUserType">نوع المستخدم:</label>
+                        <select id="userType" class="form-select" onchange="calculateCosts()">
+                            <option value="home" id="optHome" selected>منزلي</option>
+                            <option value="company" id="optCompany">شركة</option>
+                            <option value="cafe" id="optCafe">مقهى/كافيه</option>
+                            <option value="office" id="optOffice">مكتب</option>
+                            <option value="school" id="optSchool">مدرسة/جامعة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelUsageType">نوع الاستخدام:</label>
+                        <select id="usageType" class="form-select" onchange="calculateCosts()">
+                            <option value="work" id="optWork">العمل</option>
+                            <option value="study" id="optStudy">الدراسة</option>
+                            <option value="entertainment" id="optEntertainment" selected>الترفيه</option>
+                            <option value="videos" id="optVideos">مشاهدة الفيديو</option>
+                            <option value="gaming" id="optGaming">الألعاب</option>
+                            <option value="streaming" id="optStreaming">البث المباشر</option>
+                            <option value="social" id="optSocial">وسائل التواصل</option>
+                            <option value="mixed" id="optMixed">متنوع</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelVideoQuality">جودة الفيديو:</label>
+                        <select id="videoQuality" class="form-select" onchange="calculateCosts()">
+                            <option value="480p">480p (SD)</option>
+                            <option value="720p" selected>720p (HD)</option>
+                            <option value="1080p">1080p (Full HD)</option>
+                            <option value="4k">4K (Ultra HD)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelDailyHours">ساعات الاستخدام اليومي:</label>
+                        <select id="dailyHours" class="form-select" onchange="calculateCosts()">
+                            <option value="2">2 ساعة</option>
+                            <option value="4">4 ساعات</option>
+                            <option value="6" selected>6 ساعات</option>
+                            <option value="8">8 ساعات</option>
+                            <option value="10">10 ساعات</option>
+                            <option value="12">12 ساعة</option>
+                            <option value="16">16 ساعة</option>
+                            <option value="20">20+ ساعة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelVideoCalls">مكالمات الفيديو (ساعات/أسبوع):</label>
+                        <select id="videoCalls" class="form-select" onchange="calculateCosts()">
+                            <option value="0" selected id="optNoVideoCalls">لا توجد</option>
+                            <option value="2">2 ساعة</option>
+                            <option value="5">5 ساعات</option>
+                            <option value="10">10 ساعات</option>
+                            <option value="15">15 ساعة</option>
+                            <option value="20">20 ساعة</option>
+                            <option value="30">30+ ساعة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="labelLandline">تكلفة الخط الأرضي (شهرياً):</label>
+                        <select id="landlineCost" class="form-select" onchange="calculateCosts()">
+                            <option value="0" selected id="optNoLandline">لا يوجد</option>
+                            <option value="50">50 جنيه</option>
+                            <option value="120">120 جنيه</option>
+                            <option value="200">200 جنيه</option>
+                            <option value="300">300 جنيه</option>
+                            <option value="500">500 جنيه</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-value" id="costPerGB">£20.00</div>
+                        <div class="result-label" id="labelCostPerGB">تكلفة الجيجابايت</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-value" id="monthlyRecharges">22</div>
+                        <div class="result-label" id="labelMonthlyRecharges">إعادة شحن شهرياً</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-value" id="monthlyCost">£4,400</div>
+                        <div class="result-label" id="labelMonthlyCost">التكلفة الشهرية</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-value" id="annualCost">£52,800</div>
+                        <div class="result-label" id="labelAnnualCost">التكلفة السنوية</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-value" id="dataWasted">2%</div>
+                        <div class="result-label" id="labelDataWasted">البيانات المهدرة</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-value" id="totalWithLandline">£4,400</div>
+                        <div class="result-label" id="labelTotalWithLandline">الإجمالي مع الخط الأرضي</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-value" id="costPerUser">£2,200</div>
+                        <div class="result-label" id="labelCostPerUser">التكلفة لكل مستخدم شهرياً</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-value" id="estimatedData">120 GB</div>
+                        <div class="result-label" id="labelEstimatedData">الاستهلاك المتوقع</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Router Tips Section -->
+    <section id="router-tips">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-icon">⚙️</span>
+                <span id="routerTipsTitle">إرشادات تحسين الإنترنت</span>
+            </h2>
+            
+            <div class="tips-grid">
+                <!-- Router Settings Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">📡</div>
+                        <h3 class="tip-title" id="tip1Title">إعدادات الراوتر الأمثل</h3>
+                    </div>
+                    <p class="tip-description" id="tip1Desc">تحسين إعدادات الراوتر يمكن أن يزيد السرعة بنسبة 40% ويقلل الهدر</p>
+                    <ul class="tip-steps">
+                        <li id="tip1Step1">غير قناة Wi-Fi إلى القناة الأقل ازدحاماً (1، 6، أو 11)</li>
+                        <li id="tip1Step2">استخدم تردد 5GHz للأجهزة القريبة لسرعة أعلى</li>
+                        <li id="tip1Step3">فعّل QoS لتحديد أولويات التطبيقات المهمة</li>
+                        <li id="tip1Step4">حدّث firmware الراوتر بانتظام</li>
+                        <li id="tip1Step5">ضع الراوتر في مكان مركزي ومرتفع</li>
+                    </ul>
+                    <span class="tip-badge" id="tip1Badge">توفير 30-40% من الباقة</span>
+                </div>
+                
+                <!-- DNS Settings Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">🌐</div>
+                        <h3 class="tip-title" id="tip2Title">تحسين DNS</h3>
+                    </div>
+                    <p class="tip-description" id="tip2Desc">تغيير DNS يسرّع التصفح ويقلل استهلاك البيانات الزائد</p>
+                    <ul class="tip-steps">
+                        <li id="tip2Step1">استخدم Google DNS: 8.8.8.8 و 8.8.4.4</li>
+                        <li id="tip2Step2">أو Cloudflare DNS: 1.1.1.1 و 1.0.0.1</li>
+                        <li id="tip2Step3">فعّل DNS over HTTPS للأمان والسرعة</li>
+                        <li id="tip2Step4">امسح DNS Cache بانتظام</li>
+                        <li id="tip2Step5">تجنب DNS الافتراضي لمزود الخدمة</li>
+                    </ul>
+                    <span class="tip-badge" id="tip2Badge">تسريع 20-30%</span>
+                </div>
+                
+                <!-- Mobile Data Saving Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">📱</div>
+                        <h3 class="tip-title" id="tip3Title">توفير بيانات الموبايل</h3>
+                    </div>
+                    <p class="tip-description" id="tip3Desc">إعدادات بسيطة على هاتفك توفر حتى 50% من الباقة الشهرية</p>
+                    <ul class="tip-steps">
+                        <li id="tip3Step1">فعّل "توفير البيانات" في الإعدادات</li>
+                        <li id="tip3Step2">أوقف التحديثات التلقائية على Mobile Data</li>
+                        <li id="tip3Step3">حدد جودة الفيديو على YouTube/Netflix</li>
+                        <li id="tip3Step4">استخدم تطبيقات Lite (Facebook Lite، Twitter Lite)</li>
+                        <li id="tip3Step5">أوقف النسخ الاحتياطي التلقائي للصور</li>
+                    </ul>
+                    <span class="tip-badge" id="tip3Badge">توفير 40-50%</span>
+                </div>
+                
+                <!-- Browser Settings Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">🌍</div>
+                        <h3 class="tip-title" id="tip4Title">إعدادات المتصفح</h3>
+                    </div>
+                    <p class="tip-description" id="tip4Desc">تحسين المتصفح يقلل استهلاك البيانات ويزيد سرعة التصفح</p>
+                    <ul class="tip-steps">
+                        <li id="tip4Step1">فعّل Data Saver في Chrome أو Opera</li>
+                        <li id="tip4Step2">استخدم إضافات حجب الإعلانات (AdBlock)</li>
+                        <li id="tip4Step3">أوقف تشغيل الفيديو التلقائي</li>
+                        <li id="tip4Step4">امسح الكاش والملفات المؤقتة أسبوعياً</li>
+                        <li id="tip4Step5">أوقف التحميل المسبق للصفحات</li>
+                    </ul>
+                    <span class="tip-badge" id="tip4Badge">توفير 25-35%</span>
+                </div>
+                
+                <!-- Apps Management Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">📲</div>
+                        <h3 class="tip-title" id="tip5Title">إدارة التطبيقات</h3>
+                    </div>
+                    <p class="tip-description" id="tip5Desc">التحكم في التطبيقات يمنع الهدر الخفي للبيانات في الخلفية</p>
+                    <ul class="tip-steps">
+                        <li id="tip5Step1">راقب استهلاك كل تطبيق في الإعدادات</li>
+                        <li id="tip5Step2">أوقف البيانات في الخلفية للتطبيقات غير الضرورية</li>
+                        <li id="tip5Step3">امنع التطبيقات من استخدام Mobile Data</li>
+                        <li id="tip5Step4">احذف التطبيقات التي لا تستخدمها</li>
+                        <li id="tip5Step5">فعّل وضع "تقييد البيانات" للتطبيقات الثقيلة</li>
+                    </ul>
+                    <span class="tip-badge" id="tip5Badge">توفير 30-40%</span>
+                </div>
+                
+                <!-- Streaming Settings Card -->
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-icon">🎬</div>
+                        <h3 class="tip-title" id="tip6Title">ضبط جودة البث</h3>
+                    </div>
+                    <p class="tip-description" id="tip6Desc">البث بجودة مناسبة يوفر أكثر من 70% من استهلاك البيانات</p>
+                    <ul class="tip-steps">
+                        <li id="tip6Step1">استخدم 480p بدلاً من 1080p على الموبايل</li>
+                        <li id="tip6Step2">حمّل الفيديوهات على Wi-Fi للمشاهدة لاحقاً</li>
+                        <li id="tip6Step3">فعّل "توفير البيانات" في YouTube و Netflix</li>
+                        <li id="tip6Step4">تجنب البث المباشر على 4G قدر الإمكان</li>
+                        <li id="tip6Step5">استخدم التطبيقات على أقل جودة للبث الصوتي</li>
+                    </ul>
+                    <span class="tip-badge" id="tip6Badge">توفير 60-70%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section id="stats">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-icon">📊</span>
+                <span id="statsTitle">أرقام واقعية</span>
+            </h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat1">£20</div>
+                    <div class="stat-label" id="statLabel1">تكلفة الجيجابايت</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="stat2">£1</div>
+                    <div class="stat-label" id="statLabel2">التكلفة العالمية</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="stat3">40%</div>
+                    <div class="stat-label" id="statLabel3">بيانات مهدرة شهرياً</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="stat4">£2400</div>
+                    <div class="stat-label" id="statLabel4">التكلفة السنوية للأسرة المتوسطة</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section id="timeline">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-icon">⏰</span>
+                <span id="timelineTitle">تطور الأزمة</span>
+            </h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <p class="timeline-text" id="timeline2020">بداية الأزمة مع زيادة الاستهلاكات بسبب العمل من المنزل</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021</div>
+                        <p class="timeline-text" id="timeline2021">ارتفاع الأسعار بنسبة 300% مع تدهور جودة الخدمة</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023</div>
+                        <p class="timeline-text" id="timeline2023">نظام الباقات الجديد: هدر 40% من البيانات المدفوعة</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <p class="timeline-text" id="timeline2024">الوضع الحالي: تكلفة 2400£ سنوياً للأسرة المتوسطة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Solutions Section -->
+    <section id="solutions">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-icon">🏛️</span>
+                <span id="solutionsTitle">إجراءات وإصلاحات</span>
+            </h2>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">🌍</div>
+                    <h3 class="solution-title" id="solution1Title">البنية التحتية الرقمية</h3>
+                    <p class="solution-description" id="solution1Desc">توسيع شبكات الألياف الضوئية وتحديث البنية التحتية للاتصالات في جميع المحافظات</p>
+                    <ul class="solution-features">
+                        <li id="solution1Feature1">مد كابلات الألياف الضوئية للمناطق النائية</li>
+                        <li id="solution1Feature2">تحديث محطات التقوية والتبديل</li>
+                        <li id="solution1Feature3">زيادة سعة الباندويدث الدولي</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">⚖️</div>
+                    <h3 class="solution-title" id="solution2Title">التنظيم والرقابة</h3>
+                    <p class="solution-description" id="solution2Desc">تفعيل دور الجهاز القومي لتنظيم الاتصالات في حماية حقوق المستهلكين وضمان جودة الخدمة</p>
+                    <ul class="solution-features">
+                        <li id="solution2Feature1">وضع حد أقصى للأسعار بما يتناسب مع الدخل</li>
+                        <li id="solution2Feature2">فرض معايير صارمة لجودة الخدمة</li>
+                        <li id="solution2Feature3">عقوبات رادعة للشركات المخالفة</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">💸</div>
+                    <h3 class="solution-title" id="solution3Title">تخفيض الأسعار والضرائب</h3>
+                    <p class="solution-description" id="solution3Desc">إعادة هيكلة الأسعار وتخفيض الضرائب على خدمات الإنترنت لتحقيق العدالة الرقمية</p>
+                    <ul class="solution-features">
+                        <li id="solution3Feature1">إلغاء أو تخفيض ضريبة القيمة المضافة على الإنترنت</li>
+                        <li id="solution3Feature2">باقات ميسرة للطلاب والباحثين</li>
+                        <li id="solution3Feature3">تقديم دعم حكومي للفئات الأكثر احتياجاً</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">🎓</div>
+                    <h3 class="solution-title" id="solution4Title">التحول الرقمي الشامل</h3>
+                    <p class="solution-description" id="solution4Desc">تسريع رقمنة الخدمات الحكومية والتعليمية لتحفيز الاستثمار في البنية التحتية</p>
+                    <ul class="solution-features">
+                        <li id="solution4Feature1">رقمنة كاملة للخدمات الحكومية</li>
+                        <li id="solution4Feature2">توفير إنترنت مجاني في المدارس والجامعات</li>
+                        <li id="solution4Feature3">دعم الشركات الناشئة في مجال التكنولوجيا</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">🤝</div>
+                    <h3 class="solution-title" id="solution5Title">المنافسة العادلة</h3>
+                    <p class="solution-description" id="solution5Desc">فتح السوق أمام مزيد من المشغلين لكسر الاحتكار وتحسين جودة الخدمات</p>
+                    <ul class="solution-features">
+                        <li id="solution5Feature1">تسهيل دخول مشغلين جدد للسوق</li>
+                        <li id="solution5Feature2">منع الممارسات الاحتكارية</li>
+                        <li id="solution5Feature3">تشجيع الابتكار والتنافس على الجودة</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">📡</div>
+                    <h3 class="solution-title" id="solution6Title">الاتصال بالكابلات البحرية</h3>
+                    <p class="solution-description" id="solution6Desc">زيادة الاستثمار في الكابلات البحرية الدولية لتحسين سرعة واستقرار الإنترنت</p>
+                    <ul class="solution-features">
+                        <li id="solution6Feature1">الاشتراك في كابلات بحرية جديدة</li>
+                        <li id="solution6Feature2">تنويع مصادر الاتصال الدولي</li>
+                        <li id="solution6Feature3">تقليل الاعتماد على نقاط اتصال محدودة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 id="footerAboutTitle">عن المشروع</h3>
+                    <p id="footerAboutText">مبادرة توعوية لكشف حقيقة أزمة الإنترنت في مصر وتقديم حلول عملية للمواطنين.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📷</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 id="footerLinksTitle">روابط مفيدة</h3>
+                    <a href="#stats" id="footerLink1">الإحصائيات</a>
+                    <a href="#calculator" id="footerLink2">حاسبة التكلفة</a>
+                    <a href="#solutions" id="footerLink3">الحلول المقترحة</a>
+                    <a href="#timeline" id="footerLink4">تطور الأزمة</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p id="footerCopyright">© 2024 أزمة الإنترنت في مصر. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Mobile Bottom Navigation - أيقونات فقط بدون نص -->
+    <nav class="mobile-nav">
+        <a href="#hero" class="nav-item active">
+            <span>🏠</span>
+        </a>
+        <a href="#calculator" class="nav-item">
+            <span>💰</span>
+        </a>
+        <a href="#router-tips" class="nav-item">
+            <span>⚙️</span>
+        </a>
+        <a href="#stats" class="nav-item">
+            <span>📊</span>
+        </a>
+        <a href="#timeline" class="nav-item">
+            <span>⏰</span>
+        </a>
+        <a href="#solutions" class="nav-item">
+            <span>🏛️</span>
+        </a>
+    </nav>
+    
+    <script>
+        // ==================== GLOBAL VARIABLES ====================
+        let currentLang = 'ar';
+        let currentTheme = 'light';
+        
+        // ==================== TRANSLATIONS ====================
+        const translations = {
+            ar: {
+                logoText: 'أزمة الإنترنت',
+                heroTitle: '🚨 أزمة الإنترنت في مصر',
+                heroSubtitle: 'بيانات حقيقية تكشف حجم الأزمة - حلول عملية لتجاوز التحديات',
+                calcBtn: 'احسب تكلفتك الحقيقية 📊',
+                solutionsBtn: 'الإجراءات المطلوبة 🏛️',
+                statsTitle: 'أرقام واقعية',
+                statLabel1: 'تكلفة الجيجابايت',
+                statLabel2: 'التكلفة العالمية',
+                statLabel3: 'بيانات مهدرة شهرياً',
+                statLabel4: 'التكلفة السنوية للأسرة المتوسطة',
+                timelineTitle: 'تطور الأزمة',
+                timeline2020: 'بداية الأزمة مع زيادة الاستهلاكات بسبب العمل من المنزل',
+                timeline2021: 'ارتفاع الأسعار بنسبة 300% مع تدهور جودة الخدمة',
+                timeline2023: 'نظام الباقات الجديد: هدر 40% من البيانات المدفوعة',
+                timeline2024: 'الوضع الحالي: تكلفة 2400£ سنوياً للأسرة المتوسطة',
+                calculatorTitle: 'احسب تكلفتك الحقيقية',
+                labelPackage: 'باقتك الشهرية (جيجابايت):',
+                labelPrice: 'السعر الشهري (جنيه):',
+                labelUsage: 'استهلاكك الفعلي (جيجابايت/شهر):',
+                labelUsers: 'عدد المستخدمين:',
+                labelUserType: 'نوع المستخدم:',
+                optHome: 'منزلي',
+                optCompany: 'شركة',
+                optCafe: 'مقهى/كافيه',
+                optOffice: 'مكتب',
+                optSchool: 'مدرسة/جامعة',
+                labelUsageType: 'نوع الاستخدام:',
+                optWork: 'العمل',
+                optStudy: 'الدراسة',
+                optEntertainment: 'الترفيه',
+                optVideos: 'مشاهدة الفيديو',
+                optGaming: 'الألعاب',
+                optStreaming: 'البث المباشر',
+                optSocial: 'وسائل التواصل',
+                optMixed: 'متنوع',
+                labelVideoQuality: 'جودة الفيديو:',
+                labelDailyHours: 'ساعات الاستخدام اليومي:',
+                labelVideoCalls: 'مكالمات الفيديو (ساعات/أسبوع):',
+                optNoVideoCalls: 'لا توجد',
+                labelLandline: 'تكلفة الخط الأرضي (شهرياً):',
+                optNoLandline: 'لا يوجد',
+                labelCostPerGB: 'تكلفة الجيجابايت',
+                labelMonthlyRecharges: 'إعادة شحن شهرياً',
+                labelMonthlyCost: 'التكلفة الشهرية',
+                labelAnnualCost: 'التكلفة السنوية',
+                labelDataWasted: 'البيانات المهدرة',
+                labelTotalWithLandline: 'الإجمالي مع الخط الأرضي',
+                labelCostPerUser: 'التكلفة لكل مستخدم شهرياً',
+                labelEstimatedData: 'الاستهلاك المتوقع',
+                routerTipsTitle: 'إرشادات تحسين الإنترنت',
+                tip1Title: 'إعدادات الراوتر الأمثل',
+                tip1Desc: 'تحسين إعدادات الراوتر يمكن أن يزيد السرعة بنسبة 40% ويقلل الهدر',
+                tip1Step1: 'غير قناة Wi-Fi إلى القناة الأقل ازدحاماً (1، 6، أو 11)',
+                tip1Step2: 'استخدم تردد 5GHz للأجهزة القريبة لسرعة أعلى',
+                tip1Step3: 'فعّل QoS لتحديد أولويات التطبيقات المهمة',
+                tip1Step4: 'حدّث firmware الراوتر بانتظام',
+                tip1Step5: 'ضع الراوتر في مكان مركزي ومرتفع',
+                tip1Badge: 'توفير 30-40% من الباقة',
+                tip2Title: 'تحسين DNS',
+                tip2Desc: 'تغيير DNS يسرّع التصفح ويقلل استهلاك البيانات الزائد',
+                tip2Step1: 'استخدم Google DNS: 8.8.8.8 و 8.8.4.4',
+                tip2Step2: 'أو Cloudflare DNS: 1.1.1.1 و 1.0.0.1',
+                tip2Step3: 'فعّل DNS over HTTPS للأمان والسرعة',
+                tip2Step4: 'امسح DNS Cache بانتظام',
+                tip2Step5: 'تجنب DNS الافتراضي لمزود الخدمة',
+                tip2Badge: 'تسريع 20-30%',
+                tip3Title: 'توفير بيانات الموبايل',
+                tip3Desc: 'إعدادات بسيطة على هاتفك توفر حتى 50% من الباقة الشهرية',
+                tip3Step1: 'فعّل "توفير البيانات" في الإعدادات',
+                tip3Step2: 'أوقف التحديثات التلقائية على Mobile Data',
+                tip3Step3: 'حدد جودة الفيديو على YouTube/Netflix',
+                tip3Step4: 'استخدم تطبيقات Lite (Facebook Lite، Twitter Lite)',
+                tip3Step5: 'أوقف النسخ الاحتياطي التلقائي للصور',
+                tip3Badge: 'توفير 40-50%',
+                tip4Title: 'إعدادات المتصفح',
+                tip4Desc: 'تحسين المتصفح يقلل استهلاك البيانات ويزيد سرعة التصفح',
+                tip4Step1: 'فعّل Data Saver في Chrome أو Opera',
+                tip4Step2: 'استخدم إضافات حجب الإعلانات (AdBlock)',
+                tip4Step3: 'أوقف تشغيل الفيديو التلقائي',
+                tip4Step4: 'امسح الكاش والملفات المؤقتة أسبوعياً',
+                tip4Step5: 'أوقف التحميل المسبق للصفحات',
+                tip4Badge: 'توفير 25-35%',
+                tip5Title: 'إدارة التطبيقات',
+                tip5Desc: 'التحكم في التطبيقات يمنع الهدر الخفي للبيانات في الخلفية',
+                tip5Step1: 'راقب استهلاك كل تطبيق في الإعدادات',
+                tip5Step2: 'أوقف البيانات في الخلفية للتطبيقات غير الضرورية',
+                tip5Step3: 'امنع التطبيقات من استخدام Mobile Data',
+                tip5Step4: 'احذف التطبيقات التي لا تستخدمها',
+                tip5Step5: 'فعّل وضع "تقييد البيانات" للتطبيقات الثقيلة',
+                tip5Badge: 'توفير 30-40%',
+                tip6Title: 'ضبط جودة البث',
+                tip6Desc: 'البث بجودة مناسبة يوفر أكثر من 70% من استهلاك البيانات',
+                tip6Step1: 'استخدم 480p بدلاً من 1080p على الموبايل',
+                tip6Step2: 'حمّل الفيديوهات على Wi-Fi للمشاهدة لاحقاً',
+                tip6Step3: 'فعّل "توفير البيانات" في YouTube و Netflix',
+                tip6Step4: 'تجنب البث المباشر على 4G قدر الإمكان',
+                tip6Step5: 'استخدم التطبيقات على أقل جودة للبث الصوتي',
+                tip6Badge: 'توفير 60-70%',
+                solutionsTitle: 'إجراءات وإصلاحات',
+                solution1Title: 'البنية التحتية الرقمية',
+                solution1Desc: 'توسيع شبكات الألياف الضوئية وتحديث البنية التحتية للاتصالات في جميع المحافظات',
+                solution1Feature1: 'مد كابلات الألياف الضوئية للمناطق النائية',
+                solution1Feature2: 'تحديث محطات التقوية والتبديل',
+                solution1Feature3: 'زيادة سعة الباندويدث الدولي',
+                solution2Title: 'التنظيم والرقابة',
+                solution2Desc: 'تفعيل دور الجهاز القومي لتنظيم الاتصالات في حماية حقوق المستهلكين وضمان جودة الخدمة',
+                solution2Feature1: 'وضع حد أقصى للأسعار بما يتناسب مع الدخل',
+                solution2Feature2: 'فرض معايير صارمة لجودة الخدمة',
+                solution2Feature3: 'عقوبات رادعة للشركات المخالفة',
+                solution3Title: 'تخفيض الأسعار والضرائب',
+                solution3Desc: 'إعادة هيكلة الأسعار وتخفيض الضرائب على خدمات الإنترنت لتحقيق العدالة الرقمية',
+                solution3Feature1: 'إلغاء أو تخفيض ضريبة القيمة المضافة على الإنترنت',
+                solution3Feature2: 'باقات ميسرة للطلاب والباحثين',
+                solution3Feature3: 'تقديم دعم حكومي للفئات الأكثر احتياجاً',
+                solution4Title: 'التحول الرقمي الشامل',
+                solution4Desc: 'تسريع رقمنة الخدمات الحكومية والتعليمية لتحفيز الاستثمار في البنية التحتية',
+                solution4Feature1: 'رقمنة كاملة للخدمات الحكومية',
+                solution4Feature2: 'توفير إنترنت مجاني في المدارس والجامعات',
+                solution4Feature3: 'دعم الشركات الناشئة في مجال التكنولوجيا',
+                solution5Title: 'المنافسة العادلة',
+                solution5Desc: 'فتح السوق أمام مزيد من المشغلين لكسر الاحتكار وتحسين جودة الخدمات',
+                solution5Feature1: 'تسهيل دخول مشغلين جدد للسوق',
+                solution5Feature2: 'منع الممارسات الاحتكارية',
+                solution5Feature3: 'تشجيع الابتكار والتنافس على الجودة',
+                solution6Title: 'الاتصال بالكابلات البحرية',
+                solution6Desc: 'زيادة الاستثمار في الكابلات البحرية الدولية لتحسين سرعة واستقرار الإنترنت',
+                solution6Feature1: 'الاشتراك في كابلات بحرية جديدة',
+                solution6Feature2: 'تنويع مصادر الاتصال الدولي',
+                solution6Feature3: 'تقليل الاعتماد على نقاط اتصال محدودة',
+                footerAboutTitle: 'عن المشروع',
+                footerAboutText: 'مبادرة توعوية لكشف حقيقة أزمة الإنترنت في مصر وتقديم حلول عملية للمواطنين.',
+                footerLinksTitle: 'روابط مفيدة',
+                footerLink1: 'الإحصائيات',
+                footerLink2: 'حاسبة التكلفة',
+                footerLink3: 'الإجراءات المطلوبة',
+                footerLink4: 'تطور الأزمة',
+                footerCopyright: '© 2024 أزمة الإنترنت في مصر. جميع الحقوق محفوظة.',
+                navDesktopHome: 'الرئيسية',
+                navDesktopCalculator: 'الحاسبة',
+                navDesktopRouterTips: 'الإرشادات',
+                navDesktopStats: 'الإحصائيات',
+                navDesktopTimeline: 'التطور',
+                navDesktopSolutions: 'الإصلاحات'
+            },
+            en: {
+                logoText: 'Internet Crisis',
+                heroTitle: '🚨 Internet Crisis in Egypt',
+                heroSubtitle: 'Real data reveals the scale of the crisis - Practical solutions to overcome challenges',
+                calcBtn: 'Calculate Your Real Cost 📊',
+                solutionsBtn: 'Required Actions 🏛️',
+                statsTitle: 'Real Numbers',
+                statLabel1: 'Cost per GB',
+                statLabel2: 'Global Cost',
+                statLabel3: 'Monthly Wasted Data',
+                statLabel4: 'Annual Cost for Average Family',
+                timelineTitle: 'Crisis Evolution',
+                timeline2020: 'Crisis began with increased consumption due to work from home',
+                timeline2021: 'Prices increased 300% with service quality deterioration',
+                timeline2023: 'New package system: 40% waste of paid data',
+                timeline2024: 'Current situation: £2400 annually for average family',
+                calculatorTitle: 'Calculate Your Real Cost',
+                labelPackage: 'Your Monthly Package (GB):',
+                labelPrice: 'Monthly Price (EGP):',
+                labelUsage: 'Your Actual Usage (GB/month):',
+                labelUsers: 'Number of Users:',
+                labelUserType: 'User Type:',
+                optHome: 'Home',
+                optCompany: 'Company',
+                optCafe: 'Cafe',
+                optOffice: 'Office',
+                optSchool: 'School/University',
+                labelUsageType: 'Usage Type:',
+                optWork: 'Work',
+                optStudy: 'Study',
+                optEntertainment: 'Entertainment',
+                optVideos: 'Video Watching',
+                optGaming: 'Gaming',
+                optStreaming: 'Live Streaming',
+                optSocial: 'Social Media',
+                optMixed: 'Mixed',
+                labelVideoQuality: 'Video Quality:',
+                labelDailyHours: 'Daily Usage Hours:',
+                labelVideoCalls: 'Video Calls (hours/week):',
+                optNoVideoCalls: 'None',
+                labelLandline: 'Landline Cost (Monthly):',
+                optNoLandline: 'None',
+                labelCostPerGB: 'Cost per GB',
+                labelMonthlyRecharges: 'Monthly Recharges',
+                labelMonthlyCost: 'Monthly Cost',
+                labelAnnualCost: 'Annual Cost',
+                labelDataWasted: 'Wasted Data',
+                labelTotalWithLandline: 'Total with Landline',
+                labelCostPerUser: 'Cost per User/Month',
+                labelEstimatedData: 'Estimated Consumption',
+                routerTipsTitle: 'Internet Optimization Tips',
+                tip1Title: 'Optimal Router Settings',
+                tip1Desc: 'Optimizing router settings can increase speed by 40% and reduce waste',
+                tip1Step1: 'Change Wi-Fi channel to least congested (1, 6, or 11)',
+                tip1Step2: 'Use 5GHz frequency for nearby devices for higher speed',
+                tip1Step3: 'Enable QoS to prioritize important applications',
+                tip1Step4: 'Update router firmware regularly',
+                tip1Step5: 'Place router in central and elevated location',
+                tip1Badge: 'Save 30-40% of package',
+                tip2Title: 'DNS Optimization',
+                tip2Desc: 'Changing DNS speeds up browsing and reduces excess data consumption',
+                tip2Step1: 'Use Google DNS: 8.8.8.8 and 8.8.4.4',
+                tip2Step2: 'Or Cloudflare DNS: 1.1.1.1 and 1.0.0.1',
+                tip2Step3: 'Enable DNS over HTTPS for security and speed',
+                tip2Step4: 'Clear DNS Cache regularly',
+                tip2Step5: 'Avoid default ISP DNS',
+                tip2Badge: '20-30% faster',
+                tip3Title: 'Mobile Data Saving',
+                tip3Desc: 'Simple settings on your phone save up to 50% of monthly package',
+                tip3Step1: 'Enable "Data Saver" in settings',
+                tip3Step2: 'Stop automatic updates on Mobile Data',
+                tip3Step3: 'Set video quality on YouTube/Netflix',
+                tip3Step4: 'Use Lite apps (Facebook Lite, Twitter Lite)',
+                tip3Step5: 'Stop automatic photo backup',
+                tip3Badge: 'Save 40-50%',
+                tip4Title: 'Browser Settings',
+                tip4Desc: 'Browser optimization reduces data consumption and increases browsing speed',
+                tip4Step1: 'Enable Data Saver in Chrome or Opera',
+                tip4Step2: 'Use ad blocking extensions (AdBlock)',
+                tip4Step3: 'Stop auto-play videos',
+                tip4Step4: 'Clear cache and temp files weekly',
+                tip4Step5: 'Disable page preloading',
+                tip4Badge: 'Save 25-35%',
+                tip5Title: 'App Management',
+                tip5Desc: 'Controlling apps prevents hidden data waste in background',
+                tip5Step1: 'Monitor each app consumption in settings',
+                tip5Step2: 'Stop background data for unnecessary apps',
+                tip5Step3: 'Prevent apps from using Mobile Data',
+                tip5Step4: 'Delete unused apps',
+                tip5Step5: 'Enable "Restrict Data" mode for heavy apps',
+                tip5Badge: 'Save 30-40%',
+                tip6Title: 'Streaming Quality Control',
+                tip6Desc: 'Streaming at appropriate quality saves over 70% of data consumption',
+                tip6Step1: 'Use 480p instead of 1080p on mobile',
+                tip6Step2: 'Download videos on Wi-Fi for later viewing',
+                tip6Step3: 'Enable "Data Saver" in YouTube and Netflix',
+                tip6Step4: 'Avoid live streaming on 4G when possible',
+                tip6Step5: 'Use apps on lowest quality for audio streaming',
+                tip6Badge: 'Save 60-70%',
+                solutionsTitle: 'Actions & Reforms',
+                solution1Title: 'Digital Infrastructure',
+                solution1Desc: 'Expanding fiber optic networks and upgrading telecommunications infrastructure across all governorates',
+                solution1Feature1: 'Extend fiber optic cables to remote areas',
+                solution1Feature2: 'Upgrade amplification and switching stations',
+                solution1Feature3: 'Increase international bandwidth capacity',
+                solution2Title: 'Regulation & Oversight',
+                solution2Desc: 'Activate the role of the National Telecom Regulatory Authority in protecting consumer rights and ensuring service quality',
+                solution2Feature1: 'Set price caps proportionate to income',
+                solution2Feature2: 'Enforce strict service quality standards',
+                solution2Feature3: 'Deterrent penalties for violating companies',
+                solution3Title: 'Price & Tax Reduction',
+                solution3Desc: 'Restructure prices and reduce taxes on internet services to achieve digital justice',
+                solution3Feature1: 'Cancel or reduce VAT on internet services',
+                solution3Feature2: 'Affordable packages for students and researchers',
+                solution3Feature3: 'Provide government support for those most in need',
+                solution4Title: 'Comprehensive Digital Transformation',
+                solution4Desc: 'Accelerate digitization of government and educational services to stimulate infrastructure investment',
+                solution4Feature1: 'Complete digitization of government services',
+                solution4Feature2: 'Provide free internet in schools and universities',
+                solution4Feature3: 'Support tech startups',
+                solution5Title: 'Fair Competition',
+                solution5Desc: 'Open the market to more operators to break monopolies and improve service quality',
+                solution5Feature1: 'Facilitate entry of new operators',
+                solution5Feature2: 'Prevent monopolistic practices',
+                solution5Feature3: 'Encourage innovation and quality competition',
+                solution6Title: 'Submarine Cable Connectivity',
+                solution6Desc: 'Increase investment in international submarine cables to improve internet speed and stability',
+                solution6Feature1: 'Subscribe to new submarine cables',
+                solution6Feature2: 'Diversify international connectivity sources',
+                solution6Feature3: 'Reduce dependence on limited connection points',
+                footerAboutTitle: 'About the Project',
+                footerAboutText: 'An awareness initiative to reveal the truth about the internet crisis in Egypt and provide practical solutions for citizens.',
+                footerLinksTitle: 'Useful Links',
+                footerLink1: 'Statistics',
+                footerLink2: 'Cost Calculator',
+                footerLink3: 'Required Actions',
+                footerLink4: 'Crisis Evolution',
+                footerCopyright: '© 2024 Internet Crisis in Egypt. All rights reserved.',
+                navDesktopHome: 'Home',
+                navDesktopCalculator: 'Calculator',
+                navDesktopRouterTips: 'Tips',
+                navDesktopStats: 'Statistics',
+                navDesktopTimeline: 'Evolution',
+                navDesktopSolutions: 'Reforms'
+            }
+        };
+        
+        // ==================== LANGUAGE TOGGLE ====================
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.documentElement;
+            
+            if (currentLang === 'en') {
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+                document.getElementById('langText').textContent = 'AR';
+            } else {
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+                document.getElementById('langText').textContent = 'EN';
+            }
+            
+            updateContent();
+            localStorage.setItem('preferredLang', currentLang);
+        }
+        
+        // ==================== UPDATE CONTENT ====================
+        function updateContent() {
+            const lang = translations[currentLang];
+            
+            Object.keys(lang).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = lang[key];
+                }
+            });
+            
+            // Update select options
+            const egp = currentLang === 'ar' ? ' جنيه' : ' EGP';
+            
+            document.querySelectorAll('#landlineCost option').forEach(opt => {
+                if (opt.value !== '0') {
+                    opt.textContent = `${opt.value} ${egp}`;
+                }
+            });
+            
+            document.querySelectorAll('#dailyHours option').forEach(opt => {
+                const val = opt.value;
+                const txt = currentLang === 'ar' ? 
+                    (val === '2' ? '2 ساعة' : val + ' ساعات') :
+                    (val + ' hours');
+                opt.textContent = val === '20' ? (currentLang === 'ar' ? '20+ ساعة' : '20+ hours') : txt;
+            });
+            
+            document.querySelectorAll('#videoCalls option').forEach(opt => {
+                const val = opt.value;
+                if (val !== '0') {
+                    const txt = currentLang === 'ar' ? 
+                        (val === '2' ? '2 ساعة' : val + ' ساعات') :
+                        (val + ' hours');
+                    opt.textContent = val === '30' ? (currentLang === 'ar' ? '30+ ساعة' : '30+ hours') : txt;
+                }
+            });
+
+            calculateCosts();
+        }
+        
+        // ==================== THEME TOGGLE ====================
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            document.getElementById('themeIcon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            
+            localStorage.setItem('preferredTheme', currentTheme);
+        }
+        
+        // ==================== LOAD PREFERENCES ====================
+        function loadPreferences() {
+            const savedLang = localStorage.getItem('preferredLang');
+            const savedTheme = localStorage.getItem('preferredTheme');
+            
+            if (savedLang && savedLang !== currentLang) {
+                toggleLanguage();
+            }
+            
+            if (savedTheme && savedTheme !== currentTheme) {
+                toggleTheme();
+            }
+        }
+        
+        // ==================== ENHANCED CALCULATOR ====================
+        function calculateCosts() {
+            const packageSize = parseFloat(document.getElementById('packageSize').value) || 10;
+            const packagePrice = parseFloat(document.getElementById('packagePrice').value) || 200;
+            const dataNeeded = parseFloat(document.getElementById('dataNeeded').value) || 60;
+            const numUsers = parseFloat(document.getElementById('numUsers').value) || 2;
+            const landlineCost = parseFloat(document.getElementById('landlineCost').value) || 0;
+            const dailyHours = parseFloat(document.getElementById('dailyHours').value) || 6;
+            const videoCalls = parseFloat(document.getElementById('videoCalls').value) || 0;
+            const videoQuality = document.getElementById('videoQuality').value;
+            const usageType = document.getElementById('usageType').value;
+            const userType = document.getElementById('userType').value;
+            
+            // Quality multipliers
+            const qualityMultipliers = {
+                '480p': 0.5,
+                '720p': 1,
+                '1080p': 1.8,
+                '4k': 4
+            };
+            const qualityMultiplier = qualityMultipliers[videoQuality] || 1;
+            
+            // Usage type multipliers
+            const usageMultipliers = {
+                'work': 0.8,
+                'study': 0.9,
+                'entertainment': 1.2,
+                'videos': 1.5,
+                'gaming': 1.3,
+                'streaming': 1.7,
+                'social': 0.7,
+                'mixed': 1
+            };
+            const usageMultiplier = usageMultipliers[usageType] || 1;
+
+            // User type multipliers
+            const userTypeMultipliers = {
+                'home': 1,
+                'company': 1.5,
+                'cafe': 2,
+                'office': 1.3,
+                'school': 1.8
+            };
+            const userTypeMultiplier = userTypeMultipliers[userType] || 1;
+            
+            // Calculate estimated data
+            const baseDataPerUser = (dailyHours * 0.5 * 30);
+            const videoCallData = videoCalls * 1.5;
+            const adjustedData = (baseDataPerUser * qualityMultiplier * usageMultiplier * userTypeMultiplier * numUsers) + videoCallData;
+            
+            const finalDataNeeded = Math.max(dataNeeded, adjustedData);
+            
+            // Core calculations
+            const costPerGB = (packagePrice / packageSize).toFixed(2);
+            const monthlyRecharges = Math.ceil(finalDataNeeded / packageSize);
+            const monthlyCost = (monthlyRecharges * packagePrice);
+            const annualCost = (monthlyCost * 12);
+            
+            // Data wasted
+            const totalPurchased = monthlyRecharges * packageSize;
+            const dataWasted = ((totalPurchased - finalDataNeeded) / totalPurchased * 100).toFixed(0);
+            
+            // Total with landline
+            const totalWithLandline = monthlyCost + landlineCost;
+            
+            // Cost per user
+            const costPerUser = numUsers > 0 ? (monthlyCost / numUsers).toFixed(2) : monthlyCost;
+            
+            // Update UI
+            document.getElementById('costPerGB').textContent = `£${costPerGB}`;
+            document.getElementById('monthlyRecharges').textContent = monthlyRecharges;
+            document.getElementById('monthlyCost').textContent = `£${Number(monthlyCost).toLocaleString()}`;
+            document.getElementById('annualCost').textContent = `£${Number(annualCost).toLocaleString()}`;
+            document.getElementById('dataWasted').textContent = `${dataWasted}%`;
+            document.getElementById('totalWithLandline').textContent = `£${Number(totalWithLandline).toLocaleString()}`;
+            document.getElementById('costPerUser').textContent = `£${Number(costPerUser).toLocaleString()}`;
+            document.getElementById('estimatedData').textContent = `${Math.ceil(finalDataNeeded)} GB`;
+        }
+        
+        // ==================== SCROLL ANIMATIONS ====================
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.glass-card, .stat-card, .solution-card, .timeline-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+        
+        // ==================== HEADER SCROLL ====================
+        function handleScroll() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+        
+        // ==================== NAV ACTIVE STATE ====================
+        function updateActiveNav() {
+            const sections = ['hero', 'calculator', 'router-tips', 'stats', 'timeline', 'solutions'];
+            const mobileNavItems = document.querySelectorAll('.mobile-nav .nav-item');
+            const desktopNavItems = document.querySelectorAll('.desktop-nav a');
+            
+            let currentSection = 'hero';
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 150 && rect.bottom >= 150) {
+                        currentSection = sectionId;
+                    }
+                }
+            });
+            
+            mobileNavItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === `#${currentSection}`) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            desktopNavItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === `#${currentSection}`) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // ==================== SMOOTH SCROLL ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ==================== ANIMATE NUMBERS ====================
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = element.id.includes('stat4') || element.id.includes('stat1') ? `£${current}` : 
+                                     element.id.includes('stat3') ? `${current}%` : `£${current}`;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    animateValue(document.getElementById('stat1'), 0, 20, 2000);
+                    animateValue(document.getElementById('stat2'), 0, 1, 2000);
+                    animateValue(document.getElementById('stat3'), 0, 40, 2000);
+                    animateValue(document.getElementById('stat4'), 0, 2400, 2000);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const statsSection = document.getElementById('stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+        
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPreferences();
+            calculateCosts();
+            observeElements();
+        });
+        
+        window.addEventListener('scroll', () => {
+            handleScroll();
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
